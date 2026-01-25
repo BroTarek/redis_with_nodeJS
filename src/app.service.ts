@@ -22,7 +22,17 @@ export class AppService {
       description: "This is a product"
     });
     const JSONGet = await this.redis.json.get("Product")
-    const List=
+    // const listLength = await this.redis.lPush(
+    //   "MyList",
+    //   ["value1", "value2", "value3"]
+    // );
+    // const List = await this.redis.lRange("MyList", 0, -4);
+    const HashSet=await this.redis.hSet("hash",{
+      name:"hash",
+      age:25,
+      city:"Delhi"
+    })
+    const hashGetAll=await this.redis.hGetAll("hash")
     return {
       message: "Data fetched from Redis Cloud!",
       data: {
@@ -32,7 +42,10 @@ export class AppService {
         "Student": Student,
         "Range": Range,
         "EndRange": EndRange,
-        "JSONGet":JSONGet
+        "JSONGet": JSONGet,
+        // "List": List,
+        "hashGetAll":hashGetAll,
+        "valueAtIndexZero":await this.redis.LINDEX("MyList",-1)
       }
     };
   }
